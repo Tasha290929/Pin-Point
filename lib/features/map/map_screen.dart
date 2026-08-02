@@ -147,22 +147,29 @@ class _MapScreenState extends State<MapScreen> {
               backgroundColor: Colors.white,
               shape: const CircleBorder(),
               onPressed: () async {
-                Position position = await currentPosition();
-                googleMapController.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      zoom: 12,
-                      target: LatLng(position.latitude, position.longitude),
+                try {
+                  Position position = await currentPosition();
+                  googleMapController.animateCamera(
+                    CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                        zoom: 12,
+                        target: LatLng(position.latitude, position.longitude),
+                      ),
                     ),
-                  ),
-                );
-                marker.add(
-                  Marker(
-                    markerId: MarkerId("My location"),
-                    position: LatLng(position.latitude, position.longitude),
-                  ),
-                );
-                setState(() {});
+                  );
+                  marker.add(
+                    Marker(
+                      markerId: MarkerId("My location"),
+                      position: LatLng(position.latitude, position.longitude),
+                    ),
+                  );
+                  setState(() {});
+                } catch (e) {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(_locationErrorMessage(e))),
+                  );
+                }
               },
               child: const Icon(
                 Icons.my_location,
@@ -201,6 +208,19 @@ class _MapScreenState extends State<MapScreen> {
 
     Position position = await Geolocator.getCurrentPosition();
     return position;
+  }
+
+  String _locationErrorMessage(Object error) {
+    switch (error.toString()) {
+      case "location permission denied":
+        return "Location permission denied. Please allow access to use this feature.";
+      case "Location denied permanently":
+        return "Location access is permanently denied. Enable it in app settings.";
+      case "Location service are disable":
+        return "Location services are turned off. Please enable them.";
+      default:
+        return "Could not get your location. Please try again.";
+    }
   }
 
   void onNavigate() {}

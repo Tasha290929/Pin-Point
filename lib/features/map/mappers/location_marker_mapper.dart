@@ -36,7 +36,7 @@ class LocationMarkerMapper {
         try {
           return await toMarker(loc, onTap: onTap);
         } catch (e) {
-          debugPrint('Не удалось создать маркер для ${loc.id}: $e');
+          debugPrint('Failed to create marker for ${loc.id}: $e');
           return null;
         }
       }),
@@ -108,7 +108,7 @@ class LocationMarkerMapper {
       image.dispose();
 
       if (byteData == null) {
-        throw Exception('Не удалось конвертировать SVG в байты');
+        throw Exception('Failed to convert SVG to bytes');
       }
 
       return BitmapDescriptor.bytes(
@@ -117,7 +117,7 @@ class LocationMarkerMapper {
         height: _displaySize,
       );
     } catch (e) {
-      debugPrint('Ошибка загрузки иконки $iconAsset: $e');
+      debugPrint('Error loading icon $iconAsset: $e');
       return BitmapDescriptor.defaultMarker;
     }
   }

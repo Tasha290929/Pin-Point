@@ -186,7 +186,7 @@ class LocationDetailScreen extends StatelessWidget {
   }
 
   static void callPhone() {
-    // TODO: подключить url_launcher для реального звонка
+    // TODO: integrate url_launcher for an actual phone call
     debugPrint('Call button tapped');
   }
 }
