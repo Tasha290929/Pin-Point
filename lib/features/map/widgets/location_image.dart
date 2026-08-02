@@ -24,7 +24,7 @@ class LocationImage extends StatelessWidget {
         child: location.mainImage != null
             ? Image.network(location.mainImage!, fit: BoxFit.cover)
             : Image.asset(
-          '/assets/images/no_image.png',
+          'assets/images/no_image.png',
           fit: BoxFit.cover,
         ),
       ),

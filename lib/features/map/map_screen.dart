@@ -5,7 +5,9 @@ import 'package:pin_point/features/map/data/mock/mock_locations.dart';
 import 'package:pin_point/features/map/mappers/location_marker_mapper.dart';
 import 'package:pin_point/features/map/widgets/location_detail_screen.dart';
 import 'package:pin_point/features/map/widgets/location_preview_card.dart';
+import 'package:pin_point/features/profile/profile_screen.dart';
 
+import '../../core/theme/app_theme.dart';
 import 'data/models/model_location.dart';
 
 class MapScreen extends StatefulWidget {
@@ -80,6 +82,30 @@ class _MapScreenState extends State<MapScreen> {
               zoom: 11,
             ),
           ),
+          Positioned(
+            top: 0,
+            right: 16,
+            child: SafeArea(
+              child: FloatingActionButton(
+                heroTag: 'profileButton',
+                backgroundColor: Colors.white,
+                shape: const CircleBorder(),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ProfileScreen(),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.person_outline,
+                  size: 24,
+                  color: AppTheme.accentColor,
+                ),
+              ),
+            ),
+          ),
           if (selectedLocation != null)
             Positioned(
               left: 0,
@@ -113,11 +139,13 @@ class _MapScreenState extends State<MapScreen> {
             right: 16,
             bottom: selectedLocation != null
                 ? _previewCardHeight +
-                    MediaQuery.of(context).padding.bottom +
-                    24
+                      MediaQuery.of(context).padding.bottom +
+                      24
                 : 16 + MediaQuery.of(context).padding.bottom,
             child: FloatingActionButton(
+              heroTag: 'myLocationButton',
               backgroundColor: Colors.white,
+              shape: const CircleBorder(),
               onPressed: () async {
                 Position position = await currentPosition();
                 googleMapController.animateCamera(
@@ -136,7 +164,11 @@ class _MapScreenState extends State<MapScreen> {
                 );
                 setState(() {});
               },
-              child: const Icon(Icons.my_location, size: 16),
+              child: const Icon(
+                Icons.my_location,
+                size: 24,
+                color: AppTheme.accentColor,
+              ),
             ),
           ),
         ],

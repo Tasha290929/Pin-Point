@@ -94,74 +94,88 @@ class LocationDetailScreen extends StatelessWidget {
                         const SizedBox(height: 12),
                       ],
                       const SizedBox(height: 24),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'About',
-                            style: TextStyle(color: AppTheme.textPrimary),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${location.description}',
-                            style: TextStyle(color: AppTheme.textSecondary),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24,),
-                      divider(),
-                      const SizedBox(height: 12,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(Icons.alarm,
-                            color: AppTheme.accentColor,
-                            size: 24,
-                          ),
-                          const SizedBox(width: 4,),
-                          Text('Working time',
-                            style: TextStyle(color: AppTheme.textPrimary),
-                          ),
-                          const SizedBox(width: 45,),
-                          Expanded(
-                            child: Text(
-                              '${location.workingHours}',
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'About',
                               style: TextStyle(color: AppTheme.textPrimary),
-                              textAlign: TextAlign.right,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 4),
+                            Text(
+                              '${location.description}',
+                              style: TextStyle(color: AppTheme.textSecondary),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 12,),
-                      divider(),
-                      const SizedBox(height: 12,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.pin_drop_rounded,
-                            color: AppTheme.accentColor,
-                            size: 24,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Address ',
-                            style: TextStyle(color: AppTheme.textPrimary),
-                          ),
-                          const SizedBox(width: 25,),
-                          Expanded(
-                            child: Text(
-                              '${location.fullAddress}',
-                              style: TextStyle(color: AppTheme.textPrimary),
-                              textAlign: TextAlign.right,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(Icons.alarm,
+                                  color: AppTheme.accentColor,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 4,),
+                                Text('Working time',
+                                  style: TextStyle(color: AppTheme.textPrimary),
+                                ),
+                                const SizedBox(width: 45,),
+                                Expanded(
+                                  child: Text(
+                                    '${location.workingHours}',
+                                    style: TextStyle(color: AppTheme.textPrimary),
+                                    textAlign: TextAlign.right,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      )
+                            const Divider(height: 24),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.pin_drop_rounded,
+                                  color: AppTheme.accentColor,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Address ',
+                                  style: TextStyle(color: AppTheme.textPrimary),
+                                ),
+                                const SizedBox(width: 25,),
+                                Expanded(
+                                  child: Text(
+                                    '${location.fullAddress}',
+                                    style: TextStyle(color: AppTheme.textPrimary),
+                                    textAlign: TextAlign.right,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -169,10 +183,6 @@ class LocationDetailScreen extends StatelessWidget {
           );
       },
     );
-  }
-
-  static Widget divider() {
-    return const Divider(height: 1, thickness: 1);
   }
 
   static void callPhone() {
