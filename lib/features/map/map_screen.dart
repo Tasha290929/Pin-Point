@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pin_point/features/map/data/mock/mock_locations.dart';
 import 'package:pin_point/features/map/mappers/location_marker_mapper.dart';
+import 'package:pin_point/features/map/widgets/location_preview_card.dart';
 
 import 'data/models/model_location.dart';
 
@@ -19,7 +20,7 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> marker = {};
   ModelLocation? selectedLocation;
 
-@override
+  @override
   void initState() {
     super.initState();
     _requestLocationPermission();
@@ -43,28 +44,43 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  Future<void> _requestLocationPermission() async{
-LocationPermission permission = await Geolocator.checkPermission();
-if(permission == LocationPermission.denied){
-  await Geolocator.requestPermission();
-}
-
+  Future<void> _requestLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      await Geolocator.requestPermission();
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        zoomControlsEnabled: false,
-        markers: marker,
-        myLocationButtonEnabled: false,
-        onMapCreated: (GoogleMapController controller) {
-          googleMapController = controller;
-        },
-        initialCameraPosition: CameraPosition(
-          target: currentLocation,
-          zoom: 11,
-        ),
-
+      body: Stack(
+        children: [
+          GoogleMap(
+            zoomControlsEnabled: false,
+            markers: marker,
+            myLocationButtonEnabled: false,
+            onMapCreated: (GoogleMapController controller) {
+              googleMapController = controller;
+            },
+            initialCameraPosition: CameraPosition(
+              target: currentLocation,
+              zoom: 11,
+            ),
+          ),
+          if (selectedLocation != null)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: LocationPreviewCard(
+                location: selectedLocation!,
+                onClose: () => setState(() => selectedLocation = null),
+                onDetails: onDetails,
+                onNavigate: onNavigate,
+              ),
+            ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
@@ -118,4 +134,10 @@ if(permission == LocationPermission.denied){
     Position position = await Geolocator.getCurrentPosition();
     return position;
   }
+
+  void onClose() {}
+
+  void onDetails() {}
+
+  void onNavigate() {}
 }
