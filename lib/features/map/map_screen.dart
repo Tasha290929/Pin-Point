@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pin_point/features/map/data/mock/mock_locations.dart';
 import 'package:pin_point/features/map/mappers/location_marker_mapper.dart';
+import 'package:pin_point/features/map/widgets/location_detail_screen.dart';
 import 'package:pin_point/features/map/widgets/location_preview_card.dart';
 
 import 'data/models/model_location.dart';
@@ -76,7 +77,15 @@ class _MapScreenState extends State<MapScreen> {
               child: LocationPreviewCard(
                 location: selectedLocation!,
                 onClose: () => setState(() => selectedLocation = null),
-                onDetails: onDetails,
+                onDetails: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          LocationDetailScreen(location: selectedLocation!),
+                    ),
+                  );
+                },
                 onNavigate: onNavigate,
               ),
             ),
@@ -134,10 +143,6 @@ class _MapScreenState extends State<MapScreen> {
     Position position = await Geolocator.getCurrentPosition();
     return position;
   }
-
-  void onClose() {}
-
-  void onDetails() {}
 
   void onNavigate() {}
 }
