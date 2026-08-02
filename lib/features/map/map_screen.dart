@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pin_point/features/map/data/mock/mock_locations.dart';
+import 'package:pin_point/features/map/mappers/location_marker_mapper.dart';
+
+import 'data/models/model_location.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -10,15 +14,35 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  LatLng currentLocution = const LatLng(47.01, 28.86);
+  LatLng currentLocation = const LatLng(47.0226169258875, 28.83370399229604);
   late GoogleMapController googleMapController;
   Set<Marker> marker = {};
+  ModelLocation? selectedLocation;
 
 @override
   void initState() {
     super.initState();
     _requestLocationPermission();
+    _loadMockMarkers();
   }
+
+  Future<void> _loadMockMarkers() async {
+    final loadedMarkers = await LocationMarkerMapper.toMarkerSet(
+      MockLocations.all,
+      onTap: _onMarkerTap,
+    );
+
+    setState(() {
+      marker = loadedMarkers;
+    });
+  }
+
+  void _onMarkerTap(ModelLocation locations) {
+    setState(() {
+      selectedLocation = locations;
+    });
+  }
+
   Future<void> _requestLocationPermission() async{
 LocationPermission permission = await Geolocator.checkPermission();
 if(permission == LocationPermission.denied){
@@ -30,14 +54,15 @@ if(permission == LocationPermission.denied){
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
+        zoomControlsEnabled: false,
         markers: marker,
         myLocationButtonEnabled: false,
         onMapCreated: (GoogleMapController controller) {
           googleMapController = controller;
         },
         initialCameraPosition: CameraPosition(
-          target: currentLocution,
-          zoom: 15,
+          target: currentLocation,
+          zoom: 11,
         ),
 
       ),
@@ -48,7 +73,7 @@ if(permission == LocationPermission.denied){
           googleMapController.animateCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(
-                zoom: 15,
+                zoom: 12,
                 target: LatLng(position.latitude, position.longitude),
               ),
             ),
