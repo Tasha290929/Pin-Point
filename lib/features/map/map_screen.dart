@@ -20,6 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   late GoogleMapController googleMapController;
   Set<Marker> marker = {};
   ModelLocation? selectedLocation;
+  final GlobalKey _previewCardKey = GlobalKey();
+  double _previewCardHeight = 0;
 
   @override
   void initState() {
@@ -43,6 +45,15 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       selectedLocation = locations;
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _measurePreviewCard());
+  }
+
+  void _measurePreviewCard() {
+    final box =
+        _previewCardKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box != null && box.hasSize && box.size.height != _previewCardHeight) {
+      setState(() => _previewCardHeight = box.size.height);
+    }
   }
 
   Future<void> _requestLocationPermission() async {
@@ -76,46 +87,59 @@ class _MapScreenState extends State<MapScreen> {
               bottom: 0,
               child: SafeArea(
                 top: false,
-                child: LocationPreviewCard(
-                  location: selectedLocation!,
-                  onClose: () => setState(() => selectedLocation = null),
-                  onDetails: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      useSafeArea: true,
-                      backgroundColor: Colors.transparent,
-                      builder: (_) =>
-                          LocationDetailScreen(location: selectedLocation!),
-                    );
-                  },
-                  onNavigate: onNavigate,
+                child: KeyedSubtree(
+                  key: _previewCardKey,
+                  child: LocationPreviewCard(
+                    location: selectedLocation!,
+                    onClose: () => setState(() => selectedLocation = null),
+                    onDetails: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        useSafeArea: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (_) =>
+                            LocationDetailScreen(location: selectedLocation!),
+                      );
+                    },
+                    onNavigate: onNavigate,
+                  ),
                 ),
               ),
             ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOut,
+            right: 16,
+            bottom: selectedLocation != null
+                ? _previewCardHeight +
+                    MediaQuery.of(context).padding.bottom +
+                    24
+                : 16 + MediaQuery.of(context).padding.bottom,
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              onPressed: () async {
+                Position position = await currentPosition();
+                googleMapController.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      zoom: 12,
+                      target: LatLng(position.latitude, position.longitude),
+                    ),
+                  ),
+                );
+                marker.add(
+                  Marker(
+                    markerId: MarkerId("My location"),
+                    position: LatLng(position.latitude, position.longitude),
+                  ),
+                );
+                setState(() {});
+              },
+              child: const Icon(Icons.my_location, size: 16),
+            ),
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () async {
-          Position position = await currentPosition();
-          googleMapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                zoom: 12,
-                target: LatLng(position.latitude, position.longitude),
-              ),
-            ),
-          );
-          marker.add(
-            Marker(
-              markerId: MarkerId("My location"),
-              position: LatLng(position.latitude, position.longitude),
-            ),
-          );
-          setState(() {});
-        },
-        child: const Icon(Icons.my_location, size: 16),
       ),
     );
   }

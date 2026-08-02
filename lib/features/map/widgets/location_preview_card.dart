@@ -22,47 +22,55 @@ class LocationPreviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageSize = MediaQuery.of(context).size.width * 0.48;
 
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppTheme.backgroundColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 12),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(
-                color: AppTheme.accentColor,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          LocationSummary(
-            location: location,
-            imageSize: imageSize,
-            action: SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: onDetails,
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  side: BorderSide(color: AppTheme.primaryColor),
+    return GestureDetector(
+      onVerticalDragEnd: (details) {
+        final velocity = details.primaryVelocity ?? 0;
+        if (velocity > 200) {
+          onClose();
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppTheme.backgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 12),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: AppTheme.accentColor,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                child: Text('Details', style: TextStyle(color: AppTheme.primaryColor)),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 12),
+            LocationSummary(
+              location: location,
+              imageSize: imageSize,
+              action: SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: onDetails,
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    side: BorderSide(color: AppTheme.primaryColor),
+                  ),
+                  child: Text('Details', style: TextStyle(color: AppTheme.primaryColor)),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
