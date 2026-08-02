@@ -74,19 +74,23 @@ class _MapScreenState extends State<MapScreen> {
               left: 0,
               right: 0,
               bottom: 0,
-              child: LocationPreviewCard(
-                location: selectedLocation!,
-                onClose: () => setState(() => selectedLocation = null),
-                onDetails: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
+              child: SafeArea(
+                top: false,
+                child: LocationPreviewCard(
+                  location: selectedLocation!,
+                  onClose: () => setState(() => selectedLocation = null),
+                  onDetails: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      useSafeArea: true,
+                      backgroundColor: Colors.transparent,
                       builder: (_) =>
                           LocationDetailScreen(location: selectedLocation!),
-                    ),
-                  );
-                },
-                onNavigate: onNavigate,
+                    );
+                  },
+                  onNavigate: onNavigate,
+                ),
               ),
             ),
         ],
@@ -103,7 +107,6 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
           );
-          marker.clear();
           marker.add(
             Marker(
               markerId: MarkerId("My location"),
