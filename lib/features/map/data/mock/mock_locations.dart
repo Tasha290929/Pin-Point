@@ -6,8 +6,8 @@ class MockLocations {
       id: '1',
       name: 'Andy\'s Restaurant',
       category: 'food',
-      latitude: 47.02813135976164,
-      longitude: 28.83748053960894,
+      latitude: 47.02671258107101,
+      longitude: 28.837308880955575,
       fullAddress: 'Strada Pușkin 32, MD-2012, Chișinău, Молдова',
       rating: 5,
       description:
@@ -91,7 +91,7 @@ class MockLocations {
       description:
       'Dulcinella este o cofetărie-cafenea din Chișinău, cunoscută pentru prăjituri, deserturi și băuturi calde într-o atmosferă primitoare.',
       mainImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQIygFtfBK1oo08yYWqnTDwxFKQy3MTziQ7-5qJj_-nQ&s=10',
-      iconAsset: 'cafe_logo.ico',
+      iconAsset: 'cafe_logo.svg',
       workingHours: '09:00 - 21:00',
     ),
   ];
