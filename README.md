@@ -6,7 +6,7 @@ A Flutter app for discovering and viewing points of interest on a map: users see
 
 | Splash | Map | Pin preview | Location details | Profile |
 |---|---|---|---|---|
-| ![Splash screen](screenshots/splash.png) | ![Map screen](screenshots/map.png) | ![Preview card](screenshots/preview.png) | ![Details screen](screenshots/details.png) | ![Profile screen](screenshots/profile.png) |
+| <img src="screenshots/splash.png" width="160" alt="Splash screen"/> | <img src="screenshots/map.png" width="160" alt="Map screen"/> | <img src="screenshots/preview.png" width="160" alt="Preview card"/> | <img src="screenshots/details.png" width="160" alt="Details screen"/> | <img src="screenshots/profile.png" width="160" alt="Profile screen"/> |
 
 - **Splash** — animated Lottie splash screen shown on app launch.
 - **Map** — Google Map with category pins (clustered near the city center) and buttons to open the profile or center on the user's current location.
