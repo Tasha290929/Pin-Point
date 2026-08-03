@@ -2,6 +2,18 @@
 
 A Flutter app for discovering and viewing points of interest on a map: users see location pins on a Google Map, can open a preview with a short summary, view a detailed location card (photos, address, working hours, contacts), and find their current position.
 
+## Screenshots
+
+| Splash | Map | Pin preview | Location details | Profile |
+|---|---|---|---|---|
+| ![Splash screen](screenshots/splash.png) | ![Map screen](screenshots/map.png) | ![Preview card](screenshots/preview.png) | ![Details screen](screenshots/details.png) | ![Profile screen](screenshots/profile.png) |
+
+- **Splash** — animated Lottie splash screen shown on app launch.
+- **Map** — Google Map with category pins (clustered near the city center) and buttons to open the profile or center on the user's current location.
+- **Pin preview** — tapping a pin opens a bottom card with the place's photo, name, rating, category, and open/closed status, plus a button to open full details.
+- **Location details** — a full screen with a photo carousel, description, working hours, address, and a call button.
+- **Profile** — the current user's info (avatar, name, email, phone, city) and links to settings, help, and logout.
+
 ## Tech Stack
 
 - **Flutter** / Dart
