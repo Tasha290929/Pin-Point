@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pin_point/features/map/map_screen.dart';
 import 'package:pin_point/splash_screen.dart';
 
 void main() async {

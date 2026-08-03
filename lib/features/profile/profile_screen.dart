@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppTheme.accentColor.withOpacity(0.1),
+            color: AppTheme.accentColor.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: IconButton(

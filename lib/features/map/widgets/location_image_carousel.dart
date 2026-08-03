@@ -61,7 +61,7 @@ class _LocationImageCarouselState extends State<LocationImageCarousel> {
                   shape: BoxShape.circle,
                   color: active
                       ? AppTheme.accentColor
-                      : AppTheme.accentColor.withOpacity(0.3),
+                      : AppTheme.accentColor.withValues(alpha: 0.3),
                 ),
               );
             }),

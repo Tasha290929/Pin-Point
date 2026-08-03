@@ -35,7 +35,7 @@ class LocationDetailScreen extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: AppTheme.accentColor.withOpacity(0.1),
+                                color: AppTheme.accentColor.withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: IconButton(
@@ -109,7 +109,7 @@ class LocationDetailScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '${location.description}',
+                              location.description,
                               style: TextStyle(color: AppTheme.textSecondary),
                             ),
                           ],
@@ -164,7 +164,7 @@ class LocationDetailScreen extends StatelessWidget {
                                 const SizedBox(width: 25,),
                                 Expanded(
                                   child: Text(
-                                    '${location.fullAddress}',
+                                    location.fullAddress,
                                     style: TextStyle(color: AppTheme.textPrimary),
                                     textAlign: TextAlign.right,
                                     maxLines: 2,

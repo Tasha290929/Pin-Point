@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_point/core/theme/app_theme.dart';
 import 'package:pin_point/features/map/data/models/model_location.dart';
@@ -35,7 +34,7 @@ class LocationPreviewCard extends StatelessWidget {
           color: AppTheme.backgroundColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 12),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 12),
           ],
         ),
         child: Column(
